@@ -26,5 +26,6 @@
     ".pptx": "presentations",
     ".txt": "data",
     ".mov": "videos",
-    ".ipynb": "scripts"
+    ".ipynb": "scripts",
+    ".gif": "videos"
 }
