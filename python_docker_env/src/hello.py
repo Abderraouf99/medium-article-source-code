@@ -5,4 +5,4 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return "<p>Hello world, I'm running in a Docker container </p>"
+    return render_template('index.html')
