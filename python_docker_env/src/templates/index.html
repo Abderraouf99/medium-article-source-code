@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link ref="icon" href="../static/python.svg" type="image/svg+xml" />
+    <title>Python is awsome</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .python-logo {
+      aspect-ratio: 1/1;
+      width: 500px;
+      animation: rotate 10s linear infinite;
+    }
+    .image-sub-text {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-left: 1rem;
+      font-family: "Poppins", sans-serif";
+    }
+
+    @keyframes rotate {
+      0% {
+        transform-origin: 50% 50%;
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .python-logo {
+        aspect-ratio: 1/1;
+        width: 300px;
+      }
+    }
+  </style>
+  <body>
+    <div class="logo-container">
+      <img class="python-logo" src="../static/python.svg" alt="Python Logo" />
+      <p class="image-sub-text">Python is awsome</p>
+    </div>
+  </body>
+</html>
