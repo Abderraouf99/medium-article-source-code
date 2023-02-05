@@ -5,8 +5,9 @@ A collection of fun projects built using Python programming language.
 ## Project List
 
 1. Python Docker Env: A sample project to create a Python development enviroment using Docker.
-2. Clean Fodler: Keeping your local folders can be a challenge, this projects aims at making it easier.
-3. Python Web Socket: A Python project for real-time chat application using FastAPI and SvelteJS
+2. PyOrgenizer: Keeping your local folders can be a challenge, this projects aims at making it easier.
+3. FlashChat: A Python project for real-time chat application using FastAPI and SvelteJS
+4. WebStoreScapper: A Python project to scrap a Website and retreive
 
 ## Getting Started
 
