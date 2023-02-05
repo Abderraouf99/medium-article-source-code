@@ -1,6 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from dataclasses import dataclass
-from typing import List, Dict
 import uuid
 import json
 
