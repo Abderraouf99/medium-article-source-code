@@ -1,25 +1,38 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
+import uuid
+import json
 
 
 @dataclass
 class ConnectionManager:
     def __init__(self) -> None:
-        self.active_connections: List[WebSocket] = []
+        self.active_connections: dict = {}
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
-        self.active_connections.append(websocket)
+        id = str(uuid.uuid4())
+        self.active_connections[id] = websocket
+
+        await self.send_message_to(websocket, json.dumps({"type": "connect", "id": id}))
 
     def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
+        id = self.find_connection_id(websocket)
+        del self.active_connections[id]
+        return id
 
-    async def send_message_to(self, target: WebSocket, message: str):
-        await target.send_text(message)
+    def find_connection_id(self, websocket: WebSocket):
+        val_list = list(self.active_connections.values())
+        key_list = list(self.active_connections.keys())
+        id = val_list.index(websocket)
+        return key_list[id]
+
+    async def send_message_to(self, ws: WebSocket, message: str):
+        await ws.send_text(message)
 
     async def broadcast(self, message: str):
-        for connection in self.active_connections:
+        for connection in self.active_connections.values():
             await connection.send_text(message)
 
 
@@ -38,5 +51,5 @@ async def websocket_endpoint(websocket: WebSocket):
             await connection_manager.broadcast(data)
 
     except WebSocketDisconnect:
-        connection_manager.disconnect(websocket)
-        await connection_manager.broadcast(f"Client left the chat")
+        id = connection_manager.disconnect(websocket)
+        await connection_manager.broadcast(json.dumps({"type": "disconnected", "id": id}))

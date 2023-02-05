@@ -1,22 +1,22 @@
-services:
+services:  
   client1:
-    build:
-      context: ./client
+    build: ./chat-app
     volumes:
-      - ./client/src:/app/src
+      - ./chat-app:/app
+      - /app/node_modules
     ports:
-      - "8080:8080"
+      - "3000:3000"
     depends_on:
-      - websocket_api
-
+      - websocket_api  
   client2:
-    build:
-      context: ./client
+    build: ./chat-app
+    volumes:
+      - ./chat-app:/app
+      - /app/node_modules
     ports:
-      - "8081:8080"
+      - "3001:3000"
     depends_on:
-      - websocket_api
-    
+      - websocket_api  
   websocket_api:
     build: ./server
     command: uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
