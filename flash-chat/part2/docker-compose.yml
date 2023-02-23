@@ -1,0 +1,42 @@
+services:  
+  client1: # First client running on its own container
+    build: ./chat-app
+    volumes:
+      - ./chat-app:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - websocket_api  
+  client2: # Second client running on its own container
+    build: ./chat-app
+    volumes:
+      - ./chat-app:/app
+      - /app/node_modules # ignoring node_modules folder
+    ports:
+      - "3001:3000"
+    depends_on:
+      - websocket_api  
+  websocket_api: # Websocket API running on its own container
+    build: ./server
+    command: uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+     - MONGO_URI=mongodb://chat-mongodb:27017/chat-mongodb
+    volumes:
+      - ./server/src:/app/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+  
+  # Database
+  mongodb:
+    image: mongo:latest
+    container_name: chat-mongodb
+    environment:
+      - MONGO_URI=mongodb://chat-mongodb:27017/chat-mongodb
+    ports:
+      - 27017:27017
+    
+
+  

@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+websockets
+uuid
+pymongo
+colorlog
+pydantic
