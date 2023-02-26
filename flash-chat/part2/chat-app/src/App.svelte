@@ -7,7 +7,8 @@
   let userName: string = "";
   function handleUsernameEvent(event: CustomEvent<string>) {
     console.log("username submitted");
-    userName = event.detail;
+    userName = event.detail["userName"];
+    console.log(userName);
   }
 </script>
 
@@ -18,7 +19,7 @@
     </div>
   {:else}
     <div class="centered-chat-box">
-      <ChatView />
+      <ChatView {userName} />
     </div>
   {/if}>
 </main>

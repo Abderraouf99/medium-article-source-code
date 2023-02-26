@@ -1,5 +1,5 @@
-export default interface RealtimeMessage {
-  senderId: string;
-  text: string;
-  createdAt: Date;
+export default interface Message {
+  message: string;
+  userId: string;
+  roomId: string;
 }
