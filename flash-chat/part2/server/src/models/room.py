@@ -1,9 +1,8 @@
+""" Model class for chat rooms """
 import json
-from dataclasses import dataclass
 from pydantic import BaseModel
 
 
-@dataclass()
 class Room (BaseModel):
     '''
         Room dataclass for the chat
@@ -17,7 +16,7 @@ class Room (BaseModel):
             Converts the room to a dictionary
         '''
         return {
-            '__id': self.name,
+            '__id:': self.name,
             'name': self.name,
             'description': self.description,
         }

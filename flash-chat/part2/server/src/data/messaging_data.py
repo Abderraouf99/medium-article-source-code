@@ -7,7 +7,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.collection import Collection
 
 
-class MessagingData:
+class MessageData:
     '''
         This class is responsible for storing messaging to the client.
     '''
@@ -26,19 +26,13 @@ class MessagingData:
         '''
             Adds a message to the list
         '''
+
         try:
             # use pymongo to insert the message to the database
             # ensure document is updated if it already exists
             self.logger.info("Adding message to the database")
+            self.messages_collection.insert_one(message.to_dict())
 
-            self.messages_collection.update_one(
-                {
-                    '__id': message.message_id,
-                    'room_id': message.id
-                },
-                {'$setOnInsert': message},
-                upsert=True
-            )
         except TypeError as error:
             self.logger.error(f"Error adding message to the database: {error}")
         except ValueError as error:
@@ -51,7 +45,16 @@ class MessagingData:
             Gets the messages of a specific room
         '''
         try:
-            return self.messages_collection.find({'room_id': room_id})
+            # use pymongo to get the messages from the database
+            self.logger.info(
+                f"Getting messages of {room_id} from the database")
+            messages_cursor = self.messages_collection.find(
+                {'room_id': room_id})
+            messages = [ChatMessage(**message) for message in messages_cursor]
+            if len(messages) == 0:
+                self.logger.info(
+                    f"No messages found for room {room_id} in the database")
+            return messages
         except TypeError as error:
             self.logger.error(
                 f"Error getting messages from the database: {error}")

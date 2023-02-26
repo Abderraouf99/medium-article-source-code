@@ -1,6 +1,7 @@
+""" Logger class to log the messages to the console """
+from dataclasses import dataclass
 import logging
 import colorlog
-from dataclasses import dataclass
 
 
 @dataclass()

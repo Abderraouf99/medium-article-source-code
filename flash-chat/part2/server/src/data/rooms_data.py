@@ -20,7 +20,9 @@ class RoomsData:
         self.data_base = self.client["chat"]
         self.rooms_collection: Collection[Room] = self.data_base["rooms"]
         self.logger = Logger("RoomsData")
-        # self.add_room(Room(name="General", description="General room"))
+        main_room = Room(name="General", description="General room")
+
+        self.add_room(main_room)
 
     def add_room(self, room: Room) -> Room:
         '''
@@ -30,27 +32,19 @@ class RoomsData:
         # ensure document is updated if it already exists
         self.logger.info("Adding room to the database")
         try:
+            valid_room = Room(**room.to_dict())
+            if not valid_room:
+                self.logger.error("Invalid room")
+                return None
             self.rooms_collection.update_one(
-                {"__id": room.room_name},
-                {'$setOnInsert': room.to_dict()},
+                {"_id": valid_room.name},
+                {'$set': valid_room.to_dict()},
                 upsert=True
             )
             self.logger.info("Room added to the database")
-            return room
+            return valid_room
         except Exception as error:
             self.logger.error(error)
-            return None
-
-    def get_room(self, room_id: str) -> Room:
-        '''
-            Gets a room from the data base
-        '''
-        # use pymongo to get the room from the database
-        try:
-            self.logger.info("Getting room from the database")
-            return self.rooms_collection.find_one({'room_id': room_id})
-        except Exception as error:
-            print(error)
             return None
 
     def get_all_rooms(self) -> list[Room]:
@@ -60,7 +54,8 @@ class RoomsData:
         # use pymongo to get the room from the database
         try:
             self.logger.info("Getting all rooms from the database")
-            return self.rooms_collection.find()
+            rooms_cursor = self.rooms_collection.find()
+            return [Room(**room) for room in rooms_cursor]
         except Exception as error:
             self.logger.error(error)
             return None
