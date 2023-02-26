@@ -145,6 +145,7 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 10px;
+    height: 100%;
   }
 
   .message {

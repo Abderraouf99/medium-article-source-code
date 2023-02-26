@@ -1,20 +1,11 @@
 services:  
-  client1: # First client running on its own container
+  client: # First client running on its own container
     build: ./chat-app
     volumes:
       - ./chat-app:/app
       - /app/node_modules
     ports:
       - "3000:3000"
-    depends_on:
-      - websocket_api  
-  client2: # Second client running on its own container
-    build: ./chat-app
-    volumes:
-      - ./chat-app:/app
-      - /app/node_modules # ignoring node_modules folder
-    ports:
-      - "3001:3000"
     depends_on:
       - websocket_api  
   websocket_api: # Websocket API running on its own container

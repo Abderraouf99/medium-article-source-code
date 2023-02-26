@@ -5,4 +5,3 @@ uuid
 pymongo
 colorlog
 pydantic
-redis
