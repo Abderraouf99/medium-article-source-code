@@ -20,9 +20,3 @@ class Room (BaseModel):
             'name': self.name,
             'description': self.description,
         }
-
-    def to_json(self):
-        '''
-            Converts the room to a json
-        '''
-        return json.dumps(self.__dict__)

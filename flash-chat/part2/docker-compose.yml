@@ -10,7 +10,7 @@ services:
       - websocket_api  
   websocket_api: # Websocket API running on its own container
     build: ./server
-    command: uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
     restart: unless-stopped
     environment:
      - MONGO_URI=mongodb://chat-mongodb:27017/chat-mongodb
@@ -29,12 +29,3 @@ services:
       - MONGO_URI=mongodb://chat-mongodb:27017/chat-mongodb
     ports:
       - 27017:27017
-
-  redis:
-    image: redis:latest
-    container_name: chat-redis
-    ports:
-      - 6379:6379
-    
-
-  

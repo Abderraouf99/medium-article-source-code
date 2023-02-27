@@ -36,24 +36,6 @@ messages_data = MessageData()
 # Creating the logger
 api_logger = Logger("API")
 
-
-@app.post("/send-user-name/{user_name}")
-async def handle_add_user_name(user_name: str):
-    '''
-        Function to handle new user name sent from the client
-    '''
-    api_logger.info(f"Received user name: {user_name}")
-
-    # 1. Assign a unique id to the user
-    user_id = str(uuid.uuid4())
-
-    # 2. Add the user id to the application users
-    await chat_manager.save_user(user_id, user_name)
-
-    # 3. Send the user id to the client
-    return {"status": "ok", "status_code": 200, "message": "User name received", "id": user_id}
-
-
 @app.post("/add-room/", status_code=status.HTTP_201_CREATED)
 async def handle_add_room(room: Room, response: Response):
     '''

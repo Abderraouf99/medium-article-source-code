@@ -22,16 +22,7 @@
 
   async function handleUserNameSubmit() {
     try {
-      const response = await fetch(
-        `http://localhost:8000/send-user-name/${userName}`,
-        {
-          method: "POST",
-        }
-      );
-      const { id } = await response.json();
-
       userStore.update((user) => {
-        user.id = id;
         user.name = userName;
         return user;
       });

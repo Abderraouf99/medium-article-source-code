@@ -17,14 +17,7 @@ class MessagingManager:
             Initializes the active connections
         '''
         self.active_connections: dict[str, set[WebSocket]] = {}
-        self.users_id_name: dict[str, str] = {}
         self.logger = Logger("MessagingManager")
-
-    async def save_user(self, user_id: str, user_name: str):
-        '''
-            Saves the user name to the users
-        '''
-        self.users_id_name[user_id] = user_name
 
     async def connect(self, websocket: WebSocket, room_id: str):
         '''
